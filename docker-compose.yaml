@@ -1,6 +1,18 @@
 version: '3.8'
 services:
   frontend:
-    build: .
+    build: ./frontend
+    container_name: frontend
     ports:
       - "3000:3000"
+    environment:
+      # Diciamo all'app React di utilizzare l'endpoint del servizio mock
+      REACT_APP_API_BASE_URL: "http://mock-service:8000"
+    depends_on:
+      - mock-service
+
+  mock-service:
+    build: ./services/mock-service
+    container_name: mock-service
+    ports:
+      - "8000:8000"

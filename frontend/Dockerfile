@@ -1,10 +1,17 @@
 FROM node:14-alpine AS build
 WORKDIR /usr/src/app
-COPY frontend/package*.json ./
+
+# Copio prima i package.json per sfruttare la cache dei layer
+COPY package*.json ./
 RUN npm install
-COPY frontend/. .
+
+# Ora copio il resto dell’app
+COPY . .
+
+# Eseguo la build
 RUN npm run build
 
+# Secondo stage per servire i file statici
 FROM node:14-alpine AS serve
 RUN npm install -g serve
 WORKDIR /usr/src/app

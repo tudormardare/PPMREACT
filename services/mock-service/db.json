@@ -1,0 +1,6 @@
+{
+  "services": [
+    { "id": "1", "name": "Service A", "status": "running", "host": "192.168.0.10" },
+    { "id": "2", "name": "Service B", "status": "stopped", "host": "192.168.0.11" }
+  ]
+}
