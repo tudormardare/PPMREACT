@@ -1,0 +1,29 @@
+# Dipendenze
+node_modules/
+frontend/node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+frontend/coverage/
+
+# Production
+build/
+frontend/build/
+
+# Config e variabili d'ambiente
+frontend/.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# File sistema e IDE/Editor
+.DS_Store
+.idea/
+
+# Log di debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
