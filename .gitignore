@@ -13,7 +13,7 @@ build/
 frontend/build/
 
 # Config e variabili d'ambiente
-.env
+frontend/.env
 .env.local
 .env.development.local
 .env.test.local
