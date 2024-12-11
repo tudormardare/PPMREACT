@@ -5,6 +5,7 @@ interface Service {
     name: string;
     status: string;
     host: string;
+    port: number;
 }
 
 export function useFetchServices() {

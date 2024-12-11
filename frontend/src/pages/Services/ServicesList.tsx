@@ -13,9 +13,12 @@ const ServicesList: React.FC = () => {
             <h1>Lista Servizi</h1>
             <ul>
                 {services.map((s) => (
-                    <li key={s.id}>{s.name} - {s.status} ({s.host})</li>
+                    <li key={`${s.host}-${s.port}`}>
+                        {s.host}:{s.port} - {s.status}
+                    </li>
                 ))}
             </ul>
+
         </div>
     );
 };
