@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "express": "^4.21.2",
+    "ping": "^0.4.4",
+    "portscanner": "^2.2.0"
+  }
+}
