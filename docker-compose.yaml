@@ -1,26 +1,25 @@
 version: '3.8'
-
 services:
   frontend:
     build: ./frontend
-    container_name: frontend
     ports:
       - "3000:3000"
     environment:
-      REACT_APP_API_BASE_URL: "http://mock-service:8000"
+      REACT_APP_API_BASE_URL: "http://backend:5000"
     depends_on:
-      - mock-service
-    networks:
-      - app-network
+      - backend
 
-  mock-service:
-    build: ./services/mock-service
-    container_name: mock-service
+  backend:
+    build: ./backend
     ports:
-      - "8000:8000"
-    networks:
-      - app-network
+      - "5000:5000"
 
-networks:
-  app-network:
-    driver: bridge
+  service1:
+    build: ./services/service1
+    ports:
+      - "8081:8080"
+
+  service2:
+    build: ./services/service2
+    ports:
+      - "8082:8080"

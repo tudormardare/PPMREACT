@@ -14,33 +14,29 @@ export function useFetchServices() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const url = `${process.env.REACT_APP_API_BASE_URL}/services`;
-        console.log('Fetching services from URL:', url);
+        const url = `${process.env.REACT_APP_API_BASE_URL}/network/scan?subnet=192.168.0`;
+
+        console.log('Scanning network:', url);
 
         fetch(url)
-            .then(async (res) => {
-                console.log('HTTP Response status:', res.status);
-                const text = await res.text();
-                console.log('Raw response:', text);
-
+            .then((res) => {
                 if (!res.ok) {
-                    throw new Error(`Errore HTTP: ${res.statusText}`);
+                    throw new Error(`Errore durante lo scanning: ${res.statusText}`);
                 }
-
-                const json = JSON.parse(text);
-                console.log('Parsed JSON:', json);
-                return json;
+                return res.json();
             })
             .then((data) => {
+                console.log('Servizi trovati:', data);
                 setServices(data);
                 setLoading(false);
             })
             .catch((err) => {
-                console.error('Errore durante il fetch:', err.message);
+                console.error('Errore durante lo scanning:', err.message);
                 setError(err.message);
                 setLoading(false);
             });
     }, []);
+
 
     return { services, loading, error };
 }
