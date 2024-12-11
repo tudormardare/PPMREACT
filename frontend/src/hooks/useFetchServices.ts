@@ -1,33 +1,44 @@
 import { useState, useEffect } from 'react';
-import { fetchServicesList, Service } from '../api/servicesApi';
+
+interface Service {
+    id: string;
+    name: string;
+    status: string;
+    host: string;
+}
 
 export function useFetchServices() {
     const [services, setServices] = useState<Service[] | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<Error | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        let isMounted = true;
-        setLoading(true);
-        setError(null);
+        const url = `${process.env.REACT_APP_API_BASE_URL}/services`;
+        console.log('Fetching services from URL:', url);
 
-        fetchServicesList()
-            .then(data => {
-                if (isMounted) {
-                    setServices(data);
-                    setLoading(false);
+        fetch(url)
+            .then(async (res) => {
+                console.log('HTTP Response status:', res.status);
+                const text = await res.text();
+                console.log('Raw response:', text);
+
+                if (!res.ok) {
+                    throw new Error(`Errore HTTP: ${res.statusText}`);
                 }
+
+                const json = JSON.parse(text);
+                console.log('Parsed JSON:', json);
+                return json;
             })
-            .catch(err => {
-                if (isMounted) {
-                    setError(err);
-                    setLoading(false);
-                }
+            .then((data) => {
+                setServices(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error('Errore durante il fetch:', err.message);
+                setError(err.message);
+                setLoading(false);
             });
-
-        return () => {
-            isMounted = false;
-        };
     }, []);
 
     return { services, loading, error };
