@@ -3,5 +3,6 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY db.json ./
+COPY server.js ./
 EXPOSE 8000
-CMD ["npx", "json-server", "--watch", "db.json", "--port", "8000"]
+CMD ["node", "server.js"]
